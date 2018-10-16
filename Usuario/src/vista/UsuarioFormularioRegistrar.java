@@ -54,7 +54,6 @@ public class UsuarioFormularioRegistrar extends javax.swing.JPanel {
 
         txtDoc.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         txtDoc.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        txtDoc.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel1.setText("Nombres");
