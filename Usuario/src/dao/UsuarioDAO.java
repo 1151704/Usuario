@@ -5,10 +5,10 @@
  */
 package dao;
 
+import dao.interfaces.Crud;
 import conexion.Conexion;
 import java.sql.PreparedStatement;
 import dto.UsuarioDTO;
-import interfaces.Crud;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class UsuarioDAO implements Crud<UsuarioDTO> {
             if (o.getFechaNacimiento() != null) {
                 ps.setDate(3, new java.sql.Date(o.getFechaNacimiento().getTime()));
             } else {
-                ps.setString(4, null);
+                ps.setString(3, null);
             }
             if (ps.executeUpdate() > 0) {
                 return (true);

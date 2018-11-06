@@ -50,12 +50,7 @@ public class UsuarioEditar implements ActionListener {
 
         try {
 
-            UsuarioDTO usuario_nuevo = new UsuarioDTO(usuario.getId(),
-                    usuario.getDocumento(),
-                    vista.txtNombre.getText(),
-                    vista.dateNac.getDate());
-
-            if (!control.usuario_editar(usuario_nuevo)) {
+            if (!control.usuario_editar(usuario.getId(), usuario.getDocumento(), vista.txtNombre.getText(), vista.dateNac.getDate())) {
                 resetearFormulario();
             }
 

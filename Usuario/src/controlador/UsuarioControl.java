@@ -2,18 +2,20 @@ package controlador;
 
 import dao.UsuarioDAO;
 import dto.UsuarioDTO;
-import dto.UsuarioModel;
+import vista.UsuarioModel;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import servicio.Servicio;
 import vista.Usuarios;
 
 /**
@@ -29,12 +31,7 @@ public class UsuarioControl implements ActionListener {
      */
     private Usuarios vista;
 
-    /**
-     * Modelo
-     *
-     * @param modelo DATA ACCES OBJECT
-     */
-    private UsuarioDAO modelo;
+    private final Servicio servicios;
 
     /**
      * Lista
@@ -57,8 +54,8 @@ public class UsuarioControl implements ActionListener {
      */
     private TablePopup tablePopup;
 
-    public UsuarioControl(UsuarioDAO modelo) {
-        this.modelo = modelo;
+    public UsuarioControl(Servicio servicios) {
+        this.servicios = servicios;
         this.vista = new Usuarios();
         init();
     }
@@ -102,14 +99,17 @@ public class UsuarioControl implements ActionListener {
 
     /**
      * Servlet para actualizar datos de un usuario
-     *
-     * @param u usuario con datos actualizados
+     *     
+     * @param idUsuario
+     * @param documento
+     * @param nombre
+     * @param fechaNacimiento
      * @return true si el usuario se actualizo con exito, false en caso
      * contrario
      */
-    protected boolean usuario_editar(UsuarioDTO u) {
+    protected boolean usuario_editar(int idUsuario, String documento, String nombre, Date fechaNacimiento) {
 
-        if (modelo.update(u)) {
+        if (servicios.usuarioEditar(idUsuario, documento, nombre, fechaNacimiento)) {
             actualizar();
             return true;
         } else {
@@ -122,11 +122,13 @@ public class UsuarioControl implements ActionListener {
     /**
      * Servlet para registrar un nuevo usuario
      *
-     * @param u usuario nuevo
+     * @param documento
+     * @param nombre
+     * @param fechaNacimiento
      * @return true si el registro se realizo con exito, false en caso contrario
      */
-    protected boolean usuario_registrar(UsuarioDTO u) {
-        if (modelo.create(u)) {
+    protected boolean usuario_registrar(String documento, String nombre, Date fechaNacimiento) {
+        if (servicios.usuarioRegistrar(documento, nombre, fechaNacimiento)) {
             actualizar();
             return true;
         } else {
@@ -146,7 +148,7 @@ public class UsuarioControl implements ActionListener {
             switch (confirmar(vista, "Seguro desea eliminar el usuario \"" + usuario.getNombre() + "\"")) {
 
                 case 0:
-                    if (modelo.delete(usuario.getId())) {
+                    if (servicios.usuarioEliminar(usuario.getId())) {
                         actualizar();
                         return true;
                     }
@@ -167,7 +169,7 @@ public class UsuarioControl implements ActionListener {
      */
     private void actualizar() {
 
-        usuarios = modelo.readAll();
+        usuarios = servicios.usuarioListar();
         usuario = null;
         mostrarFormularioRegistrar();
 

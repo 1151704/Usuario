@@ -8,7 +8,6 @@ package controlador;
 import dto.UsuarioDTO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import vista.UsuarioFormularioRegistrar;
 
 /**
@@ -46,14 +45,10 @@ public class UsuarioRegistrar implements ActionListener {
     private void usuario_registrar() {
         try {
 
-            UsuarioDTO usuario_nuevo = new UsuarioDTO(
-                    vista.txtDoc.getText(),
-                    vista.txtNombre.getText(),
-                    vista.dateNac.getDate());
-
-            if (!control.usuario_registrar(usuario_nuevo)) {
+            if (!control.usuario_registrar(vista.txtDoc.getText(), vista.txtNombre.getText(), vista.dateNac.getDate())) {
                 limpiarFormulario();
             }
+            
         } catch (Exception e) {
             control.mostrarMensaje(control.getVista(), "Datos incorrectos");
         }

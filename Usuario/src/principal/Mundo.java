@@ -6,7 +6,8 @@
 package principal;
 
 import controlador.UsuarioControl;
-import dao.UsuarioDAO;
+import servicio.Servicio;
+import servicio.Servicios;
 
 /**
  *
@@ -21,8 +22,9 @@ public class Mundo {
      */
     public static void main(String[] args) {
 
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        UsuarioControl control = new UsuarioControl(usuarioDAO);
+        Servicio servicios = Servicios.getServicios().getServicio();
+
+        UsuarioControl control = new UsuarioControl(servicios);
 
     }
 }
